@@ -4,9 +4,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Running tests with Gradle'
-        bat './gradlew clean'
         bat './gradlew test'
-        bat './gradlew jacocoTestReport'
         junit '**/build/test-results/test/*.xml'
         cucumber '**/reports/*.json'
       }
