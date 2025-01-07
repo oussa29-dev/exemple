@@ -4,7 +4,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Running tests with Gradle'
-        bat './gradlew test'
+        sh './gradlew test'
         junit '**/build/test-results/test/*.xml'
         cucumber '**/reports/*.json'
       }
@@ -15,7 +15,7 @@ pipeline {
         echo 'Analyse code with SonarQube'
         script {
           withSonarQubeEnv('sonar') {
-            bat './gradlew sonar --stacktrace'
+            sh './gradlew sonar --stacktrace'
           }
         }
 
@@ -37,8 +37,8 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Running Build...'
-        bat './gradlew jar'
-        bat './gradlew javadoc'
+        sh './gradlew jar'
+        sh './gradlew javadoc'
         archiveArtifacts(artifacts: 'build/reports/tests/test/index.html', allowEmptyArchive: true)
         archiveArtifacts(artifacts: 'build/libs/*.jar', allowEmptyArchive: true)
       }
@@ -47,7 +47,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Start Deployement on MyMavenRepo...'
-        bat './gradlew publish'
+        sh './gradlew publish'
       }
     }
 
