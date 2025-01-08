@@ -5,6 +5,7 @@ pipeline {
       steps {
         echo 'Running tests with Gradle'
         sh 'chmod +x ./gradlew'
+        sh './gradlew test --tests "ExampleTest"'
         sh './gradlew test'
         junit '**/build/test-results/test/*.xml'
         cucumber '**/reports/*.json'
